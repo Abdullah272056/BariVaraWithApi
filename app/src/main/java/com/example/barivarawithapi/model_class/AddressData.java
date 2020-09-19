@@ -30,6 +30,13 @@ public  class AddressData {
         return id;
     }
 
+    public AddressData(String id, String userName, String email, String address) {
+        this.id = id;
+        this.userName = userName;
+        this.email = email;
+        this.address = address;
+    }
+
     public void setId(String id) {
         this.id = id;
     }

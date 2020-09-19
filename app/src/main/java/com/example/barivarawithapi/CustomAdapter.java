@@ -34,6 +34,7 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHold
     EditText nameEditText,emailEditText,addressEditText;
     Button cancelButton,saveButton;
     String name,email,address;
+    String id;
 
 
     public CustomAdapter(Context context, List<AddressData> dataList) {
@@ -87,6 +88,7 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHold
                         nameEditText.setText(dataList.get(position).getUserName());
                         emailEditText.setText(dataList.get(position).getEmail());
                         addressEditText.setText(dataList.get(position).getAddress());
+                        id=dataList.get(position).getId();
 
 
                         saveButton.setOnClickListener(new View.OnClickListener() {
@@ -96,24 +98,28 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHold
                                 email       =emailEditText.getText().toString();
                                 address     =addressEditText.getText().toString();
 
-//                                Retrofit retrofit=new Retrofit.Builder().baseUrl("https://demo-friendstech.herokuapp.com/")
-//                                        .addConverterFactory(GsonConverterFactory.create())
-//                                        .build();
-//                                ApiInterface apiInterface   =retrofit.create(ApiInterface.class);
-//                                OurDataSet ourDataSet       =new OurDataSet(name,email,address);
-//                                Call<OurDataSet>call       =apiInterface.postData(ourDataSet);
+                               // AddressData addressData=new AddressData(id,name,email,address);
+                                OurDataSet ourDataSet       =new OurDataSet(name,email,address);
+                                Retrofit retrofit=new Retrofit.Builder().baseUrl("https://demo-friendstech.herokuapp.com/")
+                                        .addConverterFactory(GsonConverterFactory.create())
+                                        .build();
+                                ApiInterface apiInterface   =retrofit.create(ApiInterface.class);
+
+                                Call<OurDataSet>call       =apiInterface.updateUser(id,ourDataSet);
 //
-//                                call.enqueue(new Callback<OurDataSet>(){
-//                                    @Override
-//                                    public void onResponse(Call<OurDataSet> call, Response<OurDataSet> response) {
-//                                        getAllFlowerData();
-//                                        Toast.makeText(MainActivity.this, response.body().getData().getMsg(), Toast.LENGTH_SHORT).show();
-//                                    }
-//                                    @Override
-//                                    public void onFailure(Call<OurDataSet> call, Throwable t){
-//                                        Toast.makeText(MainActivity.this, "fail", Toast.LENGTH_SHORT).show();
-//                                    }
-//                                });
+                                call.enqueue(new Callback<OurDataSet>(){
+                                    @Override
+                                    public void onResponse(Call<OurDataSet> call, Response<OurDataSet> response) {
+                                        Toast.makeText(context, response.body().getData().getUserName(), Toast.LENGTH_SHORT).show();
+
+                                        //getAllFlowerData();
+                                       // Toast.makeText(context, response.body().getData().getMsg(), Toast.LENGTH_SHORT).show();
+                                    }
+                                    @Override
+                                    public void onFailure(Call<OurDataSet> call, Throwable t){
+                                       // Toast.makeText(context, "fail", Toast.LENGTH_SHORT).show();
+                                    }
+                                });
 
                                 alertDialog.dismiss();
                             }
