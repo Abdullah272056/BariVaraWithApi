@@ -29,13 +29,14 @@ public class MainActivity extends AppCompatActivity {
 
     EditText nameEditText,emailEditText,addressEditText;
     Button cancelButton,saveButton;
+    String name,email,address;
 
     ApiInterface apiInterface,apiInterface1;
     List<AddressData> allAddress;
     RecyclerView recyclerView;
     CustomAdapter adapter;
     FloatingActionButton addButton;
-    String name,email,address;
+
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
@@ -67,7 +68,6 @@ public class MainActivity extends AppCompatActivity {
                     }
                 }
             }
-
             @Override
             public void onFailure(Call<AddresResponse> call, Throwable t) {
                 Toast.makeText(MainActivity.this, "fail", Toast.LENGTH_SHORT).show();
@@ -76,44 +76,43 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void addData(View v) {
-        AlertDialog.Builder builder=new AlertDialog.Builder(MainActivity.this);
-        LayoutInflater layoutInflater =LayoutInflater.from(MainActivity.this);
-        View view=layoutInflater.inflate(R.layout.input_box,null);
+        AlertDialog.Builder builder     =new AlertDialog.Builder(MainActivity.this);
+        LayoutInflater layoutInflater   =LayoutInflater.from(MainActivity.this);
+        View view                       =layoutInflater.inflate(R.layout.input_box,null);
         builder.setView(view);
-        final AlertDialog alertDialog = builder.create();
+        final AlertDialog alertDialog   = builder.create();
 
-         nameEditText=view.findViewById(R.id.nameEditTextId);
-         emailEditText=view.findViewById(R.id.emailEditTextId);
-         addressEditText=view.findViewById(R.id.addressEditTextId);
-        cancelButton=view.findViewById(R.id.cancelButtonId);
-        saveButton=view.findViewById(R.id.saveButtonId);
+         nameEditText       =view.findViewById(R.id.nameEditTextId);
+         emailEditText      =view.findViewById(R.id.emailEditTextId);
+         addressEditText    =view.findViewById(R.id.addressEditTextId);
+        cancelButton        =view.findViewById(R.id.cancelButtonId);
+        saveButton          =view.findViewById(R.id.saveButtonId);
 
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                name=nameEditText.getText().toString();
-                email=emailEditText.getText().toString();
-                address=addressEditText.getText().toString();
+                name        =nameEditText.getText().toString();
+                email       =emailEditText.getText().toString();
+                address     =addressEditText.getText().toString();
 
                 Retrofit retrofit=new Retrofit.Builder().baseUrl("https://demo-friendstech.herokuapp.com/")
                         .addConverterFactory(GsonConverterFactory.create())
                         .build();
-                ApiInterface apiInterface=retrofit.create(ApiInterface.class);
-                OurDataSet ourDataSet=new OurDataSet(name,email,address);
-                 Call<OurDataSet>call=apiInterface.postData(ourDataSet);
+                ApiInterface apiInterface   =retrofit.create(ApiInterface.class);
+                OurDataSet ourDataSet       =new OurDataSet(name,email,address);
+                 Call<OurDataSet>call       =apiInterface.postData(ourDataSet);
 
-                 call.enqueue(new Callback<OurDataSet>() {
+                 call.enqueue(new Callback<OurDataSet>(){
                      @Override
                      public void onResponse(Call<OurDataSet> call, Response<OurDataSet> response) {
                          getAllFlowerData();
                          Toast.makeText(MainActivity.this, response.body().getData().getMsg(), Toast.LENGTH_SHORT).show();
                      }
                      @Override
-                     public void onFailure(Call<OurDataSet> call, Throwable t) {
+                     public void onFailure(Call<OurDataSet> call, Throwable t){
                          Toast.makeText(MainActivity.this, "fail", Toast.LENGTH_SHORT).show();
                      }
                  });
-
 
                 alertDialog.dismiss();
             }
@@ -123,7 +122,6 @@ public class MainActivity extends AppCompatActivity {
         cancelButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 alertDialog.dismiss();
             }
         });

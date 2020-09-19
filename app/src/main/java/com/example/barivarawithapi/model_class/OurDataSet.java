@@ -19,9 +19,9 @@ data data;
     }
 
     public OurDataSet(String userName, String email, String address){
-        this.userName = userName;
-        this.email = email;
-        this.address = address;
+        this.userName   = userName;
+        this.email      = email;
+        this.address    = address;
     }
 
     public String getUserName() {
