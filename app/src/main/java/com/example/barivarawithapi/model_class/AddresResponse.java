@@ -6,15 +6,25 @@ import com.google.gson.annotations.SerializedName;
 import java.util.List;
 
 public class AddresResponse {
+    @SerializedName("success")
+    @Expose
+    private Boolean success;
     @SerializedName("data")
     @Expose
     private List<AddressData> data = null;
+    @SerializedName("msg")
+    @Expose
+    private String msg;
 
-    public AddresResponse(List<AddressData> data) {
-        this.data = data;
+    public Boolean getSuccess() {
+        return success;
     }
 
-    public List<AddressData> getData() {
+    public void setSuccess(Boolean success) {
+        this.success = success;
+    }
+
+    public List<AddressData> getData(){
         return data;
     }
 
@@ -22,6 +32,12 @@ public class AddresResponse {
         this.data = data;
     }
 
+    public String getMsg() {
+        return msg;
+    }
+
+    public void setMsg(String msg) {
+        this.msg = msg;
+    }
 
 }
-

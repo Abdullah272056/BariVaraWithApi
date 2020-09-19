@@ -5,7 +5,6 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     >
-
     <EditText
         android:layout_margin="5dp"
         android:textSize="25sp"
@@ -34,4 +33,22 @@
         android:id="@+id/addressEditTextId"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
+    <LinearLayout
+        android:orientation="horizontal"
+        android:weightSum="2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <Button
+            android:id="@+id/cancelButtonId"
+            android:text="Cancel"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="50dp"/>
+        <Button
+            android:id="@+id/saveButtonId"
+            android:text="Save"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="50dp"/>
+    </LinearLayout>
 </LinearLayout>
