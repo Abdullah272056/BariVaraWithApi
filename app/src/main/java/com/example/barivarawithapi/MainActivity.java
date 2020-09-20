@@ -94,19 +94,13 @@ public class MainActivity extends AppCompatActivity {
                 name        =nameEditText.getText().toString();
                 email       =emailEditText.getText().toString();
                 address     =addressEditText.getText().toString();
-
-                Retrofit retrofit=new Retrofit.Builder().baseUrl("https://demo-friendstech.herokuapp.com/")
-                        .addConverterFactory(GsonConverterFactory.create())
-                        .build();
-                ApiInterface apiInterface   =retrofit.create(ApiInterface.class);
+                
                 OurDataSet ourDataSet       =new OurDataSet(name,email,address);
-                 Call<OurDataSet>call       =apiInterface.postData(ourDataSet);
-
-                 call.enqueue(new Callback<OurDataSet>(){
+                apiInterface.postData(ourDataSet).enqueue(new Callback<OurDataSet>(){
                      @Override
                      public void onResponse(Call<OurDataSet> call, Response<OurDataSet> response) {
                          getAllFlowerData();
-                         Toast.makeText(MainActivity.this, response.body().getData().getMsg(), Toast.LENGTH_SHORT).show();
+                         Toast.makeText(MainActivity.this, "create success", Toast.LENGTH_SHORT).show();
                      }
                      @Override
                      public void onFailure(Call<OurDataSet> call, Throwable t){

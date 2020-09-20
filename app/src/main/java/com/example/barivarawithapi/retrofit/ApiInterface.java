@@ -7,6 +7,7 @@ import com.example.barivarawithapi.model_class.OurDataSet;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
+import retrofit2.http.DELETE;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
@@ -25,7 +26,8 @@ public interface ApiInterface {
     @PUT("api/user/{id}")
     Call<OurDataSet> updateUser(@Path("id") String id, @Body OurDataSet ourDataSet);
 
-
+    @DELETE("api/user/{id}")
+    Call<OurDataSet> deleteUser(@Path("id") String id);
 
 
 }

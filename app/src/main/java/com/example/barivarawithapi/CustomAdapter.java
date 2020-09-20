@@ -68,6 +68,7 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHold
                editTextView     = view.findViewById(R.id.editTextViewId);
                deleteTextView   = view.findViewById(R.id.deleteTextViewId);
                cancelTextView   = view.findViewById(R.id.cancelTextViewId);
+                id=dataList.get(position).getId();
                 editTextView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -88,7 +89,7 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHold
                         nameEditText.setText(dataList.get(position).getUserName());
                         emailEditText.setText(dataList.get(position).getEmail());
                         addressEditText.setText(dataList.get(position).getAddress());
-                        id=dataList.get(position).getId();
+
 
 
                         saveButton.setOnClickListener(new View.OnClickListener() {
@@ -143,8 +144,26 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHold
                     @Override
                     public void onClick(View v) {
 
+                        Retrofit retrofit=new Retrofit.Builder().baseUrl("https://demo-friendstech.herokuapp.com/")
+                                .addConverterFactory(GsonConverterFactory.create())
+                                .build();
+                        ApiInterface apiInterface   =retrofit.create(ApiInterface.class);
 
-                        Toast.makeText(context, "delete", Toast.LENGTH_SHORT).show();
+                        Call<OurDataSet>call       =apiInterface.deleteUser(id);
+                        call.enqueue(new Callback<OurDataSet>() {
+                            @Override
+                            public void onResponse(Call<OurDataSet> call, Response<OurDataSet> response) {
+                                Toast.makeText(context, "delete Success", Toast.LENGTH_SHORT).show();
+                            }
+
+                            @Override
+                            public void onFailure(Call<OurDataSet> call, Throwable t) {
+
+                            }
+                        });
+
+
+                        //Toast.makeText(context, "delete", Toast.LENGTH_SHORT).show();
 
                         alertDialog.dismiss();
                     }
