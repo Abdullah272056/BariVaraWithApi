@@ -45,7 +45,6 @@ public class MainActivity extends AppCompatActivity {
 
         //initialize apiInterface
         apiInterface = RetrofitClient.getRetrofit("https://demo-friendstech.herokuapp.com/").create(ApiInterface.class);
-      //  apiInterface1 = RetrofitClient.getRetrofit("https://demo-friendstech.herokuapp.com/").create(ApiInterface.class);
 
         recyclerView = findViewById(R.id.recyclerView);
 
@@ -54,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    private void getAllFlowerData(){
+    public void getAllFlowerData(){
         apiInterface.getAddress().enqueue(new Callback<AddresResponse>(){
             @Override
             public void onResponse(Call<AddresResponse> call, Response<AddresResponse> response) {
@@ -94,7 +93,7 @@ public class MainActivity extends AppCompatActivity {
                 name        =nameEditText.getText().toString();
                 email       =emailEditText.getText().toString();
                 address     =addressEditText.getText().toString();
-                
+
                 OurDataSet ourDataSet       =new OurDataSet(name,email,address);
                 apiInterface.postData(ourDataSet).enqueue(new Callback<OurDataSet>(){
                      @Override
@@ -111,7 +110,6 @@ public class MainActivity extends AppCompatActivity {
                 alertDialog.dismiss();
             }
         });
-
 
         cancelButton.setOnClickListener(new View.OnClickListener() {
             @Override

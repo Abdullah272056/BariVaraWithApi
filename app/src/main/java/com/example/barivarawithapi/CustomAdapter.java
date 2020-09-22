@@ -25,7 +25,7 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHolder> {
+public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHolder>{
     Context context;
     List<AddressData> dataList;
     TextView editTextView,deleteTextView,cancelTextView;
@@ -37,7 +37,7 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHold
     String id;
 
 
-    public CustomAdapter(Context context, List<AddressData> dataList) {
+    public CustomAdapter(Context context, List<AddressData> dataList){
         this.context    = context;
         this.dataList   = dataList;
 
@@ -91,7 +91,6 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHold
                         addressEditText.setText(dataList.get(position).getAddress());
 
 
-
                         saveButton.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
@@ -107,10 +106,11 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHold
                                 ApiInterface apiInterface   =retrofit.create(ApiInterface.class);
 
                                 Call<OurDataSet>call       =apiInterface.updateUser(id,ourDataSet);
-//
+
                                 call.enqueue(new Callback<OurDataSet>(){
                                     @Override
                                     public void onResponse(Call<OurDataSet> call, Response<OurDataSet> response) {
+                                        ((MainActivity)context).getAllFlowerData();
                                         Toast.makeText(context, response.body().getData().getUserName(), Toast.LENGTH_SHORT).show();
 
                                         //getAllFlowerData();
@@ -154,6 +154,7 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHold
                             @Override
                             public void onResponse(Call<OurDataSet> call, Response<OurDataSet> response) {
                                 Toast.makeText(context, "delete Success", Toast.LENGTH_SHORT).show();
+                                ((MainActivity)context).getAllFlowerData();
                             }
 
                             @Override

@@ -6,6 +6,7 @@ public class data {
     String address;
     String msg;
 
+    //getter setter
     public String getMsg() {
         return msg;
     }
